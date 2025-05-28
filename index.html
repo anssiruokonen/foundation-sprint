@@ -6,19 +6,25 @@
     <title>Foundation Sprint Workshop</title>
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --text-color: #333;
-            --bg-color: #fff;
+            --primary-color: #2563eb;
+            --secondary-color: #3b82f6;
+            --accent-color: #60a5fa;
+            --text-color: #1f2937;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
         }
 
         [data-theme="dark"] {
-            --primary-color: #34495e;
-            --secondary-color: #2980b9;
-            --accent-color: #c0392b;
-            --text-color: #ecf0f1;
-            --bg-color: #2c3e50;
+            --primary-color: #3b82f6;
+            --secondary-color: #60a5fa;
+            --accent-color: #93c5fd;
+            --text-color: #f1f5f9;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --border-color: #334155;
+            --success-color: #34d399;
         }
 
         * {
@@ -28,7 +34,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--bg-color);
@@ -38,107 +44,204 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
         }
 
         .module {
             margin-bottom: 2rem;
-            padding: 1rem;
-            border: 1px solid var(--primary-color);
-            border-radius: 8px;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .module:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
         .module-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .timer {
-            font-size: 1.2rem;
-            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+            color: var(--text-color);
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 0.5rem;
-            border: 1px solid var(--primary-color);
-            border-radius: 4px;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 0.5rem;
             font-size: 1rem;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         .form-group textarea {
-            min-height: 100px;
+            min-height: 120px;
             resize: vertical;
         }
 
         /* Navigation */
         .navigation {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--primary-color);
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--card-bg);
             padding: 1rem;
-            border-radius: 8px;
-            color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            display: flex;
+            gap: 0.5rem;
         }
 
         .navigation button {
-            background-color: var(--secondary-color);
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
             cursor: pointer;
-            margin: 0 0.5rem;
+            font-weight: 500;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .navigation button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
         }
 
         /* Export Section */
         .export-section {
-            margin-top: 2rem;
-            padding: 1rem;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 8px;
+            margin-top: 3rem;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .export-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
         }
 
         .export-section button {
-            background-color: var(--secondary-color);
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
             cursor: pointer;
+            font-weight: 500;
             margin: 0.5rem;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .export-section button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
         }
 
         /* Theme Toggle */
         .theme-toggle {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 2rem;
+            right: 2rem;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .theme-toggle:hover {
             background-color: var(--primary-color);
             color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
+            border-color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        /* Progress Indicator */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .module {
+                padding: 1.5rem;
+            }
+
+            .navigation {
+                bottom: 1rem;
+                right: 1rem;
+            }
+
+            .theme-toggle {
+                top: 1rem;
+                right: 1rem;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="progress-bar" id="progress-bar"></div>
     <div class="container">
         <h1>Foundation Sprint Workshop</h1>
         
@@ -146,16 +249,15 @@
         <div class="module" id="module1">
             <div class="module-header">
                 <h2>Module 1: Basics</h2>
-                <div class="timer" data-time="5400">90:00</div>
             </div>
             <form id="basics-form">
                 <div class="form-group">
                     <label for="company-name">Company/Project Name:</label>
-                    <input type="text" id="company-name" required>
+                    <input type="text" id="company-name" required placeholder="Enter your company or project name">
                 </div>
                 <div class="form-group">
                     <label for="problem">Problem Statement:</label>
-                    <textarea id="problem" required></textarea>
+                    <textarea id="problem" required placeholder="Describe the problem you're trying to solve"></textarea>
                 </div>
             </form>
         </div>
@@ -164,16 +266,15 @@
         <div class="module" id="module2">
             <div class="module-header">
                 <h2>Module 2: Differentiation</h2>
-                <div class="timer" data-time="5400">90:00</div>
             </div>
             <form id="differentiation-form">
                 <div class="form-group">
                     <label for="competitors">Main Competitors:</label>
-                    <textarea id="competitors" required></textarea>
+                    <textarea id="competitors" required placeholder="List your main competitors and their key features"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="differentiators">Key Differentiators:</label>
-                    <textarea id="differentiators" required></textarea>
+                    <textarea id="differentiators" required placeholder="What makes your solution unique?"></textarea>
                 </div>
             </form>
         </div>
@@ -182,16 +283,15 @@
         <div class="module" id="module3">
             <div class="module-header">
                 <h2>Module 3: Approach</h2>
-                <div class="timer" data-time="5400">90:00</div>
             </div>
             <form id="approach-form">
                 <div class="form-group">
                     <label for="approach">Approach Description:</label>
-                    <textarea id="approach" required></textarea>
+                    <textarea id="approach" required placeholder="Describe your approach to solving the problem"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="risks">Potential Risks:</label>
-                    <textarea id="risks" required></textarea>
+                    <textarea id="risks" required placeholder="What are the main risks and challenges?"></textarea>
                 </div>
             </form>
         </div>
@@ -200,16 +300,15 @@
         <div class="module" id="module4">
             <div class="module-header">
                 <h2>Module 4: MVP & Hypothesis</h2>
-                <div class="timer" data-time="3600">60:00</div>
             </div>
             <form id="mvp-form">
                 <div class="form-group">
                     <label for="mvp">MVP Description:</label>
-                    <textarea id="mvp" required></textarea>
+                    <textarea id="mvp" required placeholder="Describe your Minimum Viable Product"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="hypothesis">Founding Hypothesis:</label>
-                    <textarea id="hypothesis" required></textarea>
+                    <textarea id="hypothesis" required placeholder="What is your founding hypothesis?"></textarea>
                 </div>
             </form>
         </div>
@@ -237,12 +336,13 @@
         // Workshop Initialization
         window.onload = function() {
             initializeWorkshop();
+            updateProgressBar();
         };
 
         function initializeWorkshop() {
             loadSavedData();
-            startTimers();
             setupAutoSave();
+            setupFormValidation();
         }
 
         // Local Storage Functions
@@ -283,31 +383,33 @@
             setInterval(saveToLocalStorage, 30000); // Save every 30 seconds
         }
 
-        // Timer Functions
-        function startTimers() {
-            document.querySelectorAll('.timer').forEach(timer => {
-                const timeInSeconds = parseInt(timer.dataset.time);
-                let remainingTime = timeInSeconds;
-                
-                const interval = setInterval(() => {
-                    remainingTime--;
-                    const minutes = Math.floor(remainingTime / 60);
-                    const seconds = remainingTime % 60;
-                    timer.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-                    
-                    if (remainingTime <= 300) { // 5 minutes remaining
-                        timer.style.color = 'red';
-                        if (remainingTime === 300) {
-                            alert('5 minutes remaining!');
-                        }
-                    }
-                    
-                    if (remainingTime <= 0) {
-                        clearInterval(interval);
-                        timer.textContent = 'Time\'s up!';
-                    }
-                }, 1000);
+        // Form Validation
+        function setupFormValidation() {
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('input', updateProgressBar);
             });
+        }
+
+        // Progress Bar
+        function updateProgressBar() {
+            const totalFields = 8; // Total number of required fields
+            let filledFields = 0;
+
+            const fields = [
+                'company-name', 'problem', 'competitors', 'differentiators',
+                'approach', 'risks', 'mvp', 'hypothesis'
+            ];
+
+            fields.forEach(field => {
+                const element = document.getElementById(field);
+                if (element && element.value.trim() !== '') {
+                    filledFields++;
+                }
+            });
+
+            const progress = (filledFields / totalFields) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
         }
 
         // Navigation Functions
@@ -319,6 +421,7 @@
                 document.getElementById(`module${currentModule}`).style.display = 'none';
                 currentModule++;
                 document.getElementById(`module${currentModule}`).style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
 
@@ -327,6 +430,7 @@
                 document.getElementById(`module${currentModule}`).style.display = 'none';
                 currentModule--;
                 document.getElementById(`module${currentModule}`).style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
 
