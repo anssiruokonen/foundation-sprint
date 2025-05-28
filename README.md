@@ -13,7 +13,7 @@ A secure, single-page workshop facilitation tool for conducting Foundation Sprin
 
 ## Getting Started
 
-1. Access the workshop tool at [your-github-pages-url]
+1. Access the workshop tool at https://anssiruokonen.github.io/foundation-sprint/
 2. Enter the password to access the workshop
 3. Optionally check "Remember me for 24 hours" to skip password entry on future visits
 
