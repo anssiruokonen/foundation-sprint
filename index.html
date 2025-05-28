@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foundation Sprint Workshop</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --bg-color: #fff;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #34495e;
+            --secondary-color: #2980b9;
+            --accent-color: #c0392b;
+            --text-color: #ecf0f1;
+            --bg-color: #2c3e50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Password Protection */
+        #password-protection {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .password-form {
+            background-color: var(--primary-color);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: white;
+        }
+
+        .password-form input {
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            width: 100%;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .password-form button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        /* Workshop Content */
+        #workshop-content {
+            display: none;
+        }
+
+        .module {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .timer {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+        }
+
+        /* Navigation */
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            padding: 1rem;
+            border-radius: 8px;
+            color: white;
+        }
+
+        .navigation button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 0.5rem;
+        }
+
+        /* Export Section */
+        .export-section {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 8px;
+        }
+
+        .export-section button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Protection -->
+    <div id="password-protection">
+        <div class="password-form">
+            <h2>Foundation Sprint Workshop</h2>
+            <p>Please enter the password to access the workshop:</p>
+            <input type="password" id="password-input" placeholder="Enter password">
+            <label>
+                <input type="checkbox" id="remember-me"> Remember me for 24 hours
+            </label>
+            <button onclick="checkPassword()">Enter</button>
+        </div>
+    </div>
+
+    <!-- Workshop Content -->
+    <div id="workshop-content">
+        <div class="container">
+            <h1>Foundation Sprint Workshop</h1>
+            
+            <!-- Module 1: Basics -->
+            <div class="module" id="module1">
+                <div class="module-header">
+                    <h2>Module 1: Basics</h2>
+                    <div class="timer" data-time="5400">90:00</div>
+                </div>
+                <form id="basics-form">
+                    <div class="form-group">
+                        <label for="company-name">Company/Project Name:</label>
+                        <input type="text" id="company-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="problem">Problem Statement:</label>
+                        <textarea id="problem" required></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Module 2: Differentiation -->
+            <div class="module" id="module2">
+                <div class="module-header">
+                    <h2>Module 2: Differentiation</h2>
+                    <div class="timer" data-time="5400">90:00</div>
+                </div>
+                <form id="differentiation-form">
+                    <div class="form-group">
+                        <label for="competitors">Main Competitors:</label>
+                        <textarea id="competitors" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="differentiators">Key Differentiators:</label>
+                        <textarea id="differentiators" required></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Module 3: Approach -->
+            <div class="module" id="module3">
+                <div class="module-header">
+                    <h2>Module 3: Approach</h2>
+                    <div class="timer" data-time="5400">90:00</div>
+                </div>
+                <form id="approach-form">
+                    <div class="form-group">
+                        <label for="approach">Approach Description:</label>
+                        <textarea id="approach" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="risks">Potential Risks:</label>
+                        <textarea id="risks" required></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Module 4: MVP & Hypothesis -->
+            <div class="module" id="module4">
+                <div class="module-header">
+                    <h2>Module 4: MVP & Hypothesis</h2>
+                    <div class="timer" data-time="3600">60:00</div>
+                </div>
+                <form id="mvp-form">
+                    <div class="form-group">
+                        <label for="mvp">MVP Description:</label>
+                        <textarea id="mvp" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="hypothesis">Founding Hypothesis:</label>
+                        <textarea id="hypothesis" required></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Export Section -->
+            <div class="export-section">
+                <h3>Export Workshop Results</h3>
+                <button onclick="exportToPDF()">Export to PDF</button>
+                <button onclick="exportToJSON()">Export to JSON</button>
+                <button onclick="exportToMarkdown()">Export to Markdown</button>
+                <button onclick="exportToCSV()">Export to CSV</button>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button onclick="previousModule()">Previous</button>
+            <button onclick="nextModule()">Next</button>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+    </div>
+
+    <script>
+        // Password Protection
+        const PASSWORD_HASH = '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'; // 'password' hashed with SHA-256
+        const SESSION_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
+        function checkPassword() {
+            const password = document.getElementById('password-input').value;
+            const rememberMe = document.getElementById('remember-me').checked;
+            
+            // Hash the input password
+            const hashedPassword = sha256(password);
+            
+            if (hashedPassword === PASSWORD_HASH) {
+                document.getElementById('password-protection').style.display = 'none';
+                document.getElementById('workshop-content').style.display = 'block';
+                
+                if (rememberMe) {
+                    const expiryTime = Date.now() + SESSION_DURATION;
+                    sessionStorage.setItem('workshopSession', expiryTime.toString());
+                }
+                
+                initializeWorkshop();
+            } else {
+                alert('Incorrect password. Please try again.');
+            }
+        }
+
+        // Check for existing session
+        window.onload = function() {
+            const sessionExpiry = sessionStorage.getItem('workshopSession');
+            if (sessionExpiry && Date.now() < parseInt(sessionExpiry)) {
+                document.getElementById('password-protection').style.display = 'none';
+                document.getElementById('workshop-content').style.display = 'block';
+                initializeWorkshop();
+            }
+        };
+
+        // Workshop Initialization
+        function initializeWorkshop() {
+            loadSavedData();
+            startTimers();
+            setupAutoSave();
+        }
+
+        // Local Storage Functions
+        function saveToLocalStorage() {
+            const workshopData = {
+                companyName: document.getElementById('company-name').value,
+                problem: document.getElementById('problem').value,
+                competitors: document.getElementById('competitors').value,
+                differentiators: document.getElementById('differentiators').value,
+                approach: document.getElementById('approach').value,
+                risks: document.getElementById('risks').value,
+                mvp: document.getElementById('mvp').value,
+                hypothesis: document.getElementById('hypothesis').value,
+                timestamp: new Date().toISOString()
+            };
+
+            localStorage.setItem('foundationSprint_' + workshopData.timestamp, JSON.stringify(workshopData));
+        }
+
+        function loadSavedData() {
+            const keys = Object.keys(localStorage).filter(key => key.startsWith('foundationSprint_'));
+            if (keys.length > 0) {
+                const latestKey = keys.sort().pop();
+                const savedData = JSON.parse(localStorage.getItem(latestKey));
+                
+                // Populate form fields
+                Object.keys(savedData).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        element.value = savedData[key];
+                    }
+                });
+            }
+        }
+
+        // Auto-save functionality
+        function setupAutoSave() {
+            setInterval(saveToLocalStorage, 30000); // Save every 30 seconds
+        }
+
+        // Timer Functions
+        function startTimers() {
+            document.querySelectorAll('.timer').forEach(timer => {
+                const timeInSeconds = parseInt(timer.dataset.time);
+                let remainingTime = timeInSeconds;
+                
+                const interval = setInterval(() => {
+                    remainingTime--;
+                    const minutes = Math.floor(remainingTime / 60);
+                    const seconds = remainingTime % 60;
+                    timer.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                    
+                    if (remainingTime <= 300) { // 5 minutes remaining
+                        timer.style.color = 'red';
+                        if (remainingTime === 300) {
+                            alert('5 minutes remaining!');
+                        }
+                    }
+                    
+                    if (remainingTime <= 0) {
+                        clearInterval(interval);
+                        timer.textContent = 'Time\'s up!';
+                    }
+                }, 1000);
+            });
+        }
+
+        // Navigation Functions
+        let currentModule = 1;
+        const totalModules = 4;
+
+        function nextModule() {
+            if (currentModule < totalModules) {
+                document.getElementById(`module${currentModule}`).style.display = 'none';
+                currentModule++;
+                document.getElementById(`module${currentModule}`).style.display = 'block';
+            }
+        }
+
+        function previousModule() {
+            if (currentModule > 1) {
+                document.getElementById(`module${currentModule}`).style.display = 'none';
+                currentModule--;
+                document.getElementById(`module${currentModule}`).style.display = 'block';
+            }
+        }
+
+        // Export Functions
+        function exportToPDF() {
+            // Implementation for PDF export
+            alert('PDF export functionality to be implemented');
+        }
+
+        function exportToJSON() {
+            const workshopData = {
+                companyName: document.getElementById('company-name').value,
+                problem: document.getElementById('problem').value,
+                competitors: document.getElementById('competitors').value,
+                differentiators: document.getElementById('differentiators').value,
+                approach: document.getElementById('approach').value,
+                risks: document.getElementById('risks').value,
+                mvp: document.getElementById('mvp').value,
+                hypothesis: document.getElementById('hypothesis').value,
+                timestamp: new Date().toISOString()
+            };
+
+            const blob = new Blob([JSON.stringify(workshopData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `foundation-sprint-${workshopData.timestamp}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function exportToMarkdown() {
+            // Implementation for Markdown export
+            alert('Markdown export functionality to be implemented');
+        }
+
+        function exportToCSV() {
+            // Implementation for CSV export
+            alert('CSV export functionality to be implemented');
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            body.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
+            localStorage.setItem('theme', currentTheme === 'dark' ? 'light' : 'dark');
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.body.setAttribute('data-theme', savedTheme);
+        }
+
+        // SHA-256 Hash Function
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+    </script>
+</body>
+</html> 
