@@ -1,10 +1,9 @@
 # Foundation Sprint Workshop Tool
 
-A secure, single-page workshop facilitation tool for conducting Foundation Sprint workshops. This tool works entirely client-side and is hosted on GitHub Pages.
+A single-page workshop facilitation tool for conducting Foundation Sprint workshops. This tool works entirely client-side and is hosted on GitHub Pages.
 
 ## Features
 
-- Password protection for secure access
 - Auto-save functionality using localStorage
 - Module-based workshop structure with timers
 - Dark/light theme support
@@ -14,8 +13,8 @@ A secure, single-page workshop facilitation tool for conducting Foundation Sprin
 ## Getting Started
 
 1. Access the workshop tool at https://anssiruokonen.github.io/foundation-sprint/
-2. Enter the password to access the workshop
-3. Optionally check "Remember me for 24 hours" to skip password entry on future visits
+2. Start working through the modules
+3. Your progress is automatically saved
 
 ## Workshop Modules
 

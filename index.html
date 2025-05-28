@@ -41,52 +41,6 @@
             padding: 20px;
         }
 
-        /* Password Protection */
-        #password-protection {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .password-form {
-            background-color: var(--primary-color);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            color: white;
-        }
-
-        .password-form input {
-            padding: 0.5rem;
-            margin: 0.5rem 0;
-            width: 100%;
-            border: none;
-            border-radius: 4px;
-        }
-
-        .password-form button {
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 1rem;
-        }
-
-        /* Workshop Content */
-        #workshop-content {
-            display: none;
-        }
-
         .module {
             margin-bottom: 2rem;
             padding: 1rem;
@@ -104,6 +58,30 @@
         .timer {
             font-size: 1.2rem;
             color: var(--accent-color);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--primary-color);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
         }
 
         /* Navigation */
@@ -161,173 +139,106 @@
     </style>
 </head>
 <body>
-    <!-- Password Protection -->
-    <div id="password-protection">
-        <div class="password-form">
-            <h2>Foundation Sprint Workshop</h2>
-            <p>Please enter the password to access the workshop:</p>
-            <input type="password" id="password-input" placeholder="Enter password">
-            <label>
-                <input type="checkbox" id="remember-me"> Remember me for 24 hours
-            </label>
-            <button onclick="checkPassword()">Enter</button>
+    <div class="container">
+        <h1>Foundation Sprint Workshop</h1>
+        
+        <!-- Module 1: Basics -->
+        <div class="module" id="module1">
+            <div class="module-header">
+                <h2>Module 1: Basics</h2>
+                <div class="timer" data-time="5400">90:00</div>
+            </div>
+            <form id="basics-form">
+                <div class="form-group">
+                    <label for="company-name">Company/Project Name:</label>
+                    <input type="text" id="company-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="problem">Problem Statement:</label>
+                    <textarea id="problem" required></textarea>
+                </div>
+            </form>
+        </div>
+
+        <!-- Module 2: Differentiation -->
+        <div class="module" id="module2">
+            <div class="module-header">
+                <h2>Module 2: Differentiation</h2>
+                <div class="timer" data-time="5400">90:00</div>
+            </div>
+            <form id="differentiation-form">
+                <div class="form-group">
+                    <label for="competitors">Main Competitors:</label>
+                    <textarea id="competitors" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="differentiators">Key Differentiators:</label>
+                    <textarea id="differentiators" required></textarea>
+                </div>
+            </form>
+        </div>
+
+        <!-- Module 3: Approach -->
+        <div class="module" id="module3">
+            <div class="module-header">
+                <h2>Module 3: Approach</h2>
+                <div class="timer" data-time="5400">90:00</div>
+            </div>
+            <form id="approach-form">
+                <div class="form-group">
+                    <label for="approach">Approach Description:</label>
+                    <textarea id="approach" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="risks">Potential Risks:</label>
+                    <textarea id="risks" required></textarea>
+                </div>
+            </form>
+        </div>
+
+        <!-- Module 4: MVP & Hypothesis -->
+        <div class="module" id="module4">
+            <div class="module-header">
+                <h2>Module 4: MVP & Hypothesis</h2>
+                <div class="timer" data-time="3600">60:00</div>
+            </div>
+            <form id="mvp-form">
+                <div class="form-group">
+                    <label for="mvp">MVP Description:</label>
+                    <textarea id="mvp" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="hypothesis">Founding Hypothesis:</label>
+                    <textarea id="hypothesis" required></textarea>
+                </div>
+            </form>
+        </div>
+
+        <!-- Export Section -->
+        <div class="export-section">
+            <h3>Export Workshop Results</h3>
+            <button onclick="exportToPDF()">Export to PDF</button>
+            <button onclick="exportToJSON()">Export to JSON</button>
+            <button onclick="exportToMarkdown()">Export to Markdown</button>
+            <button onclick="exportToCSV()">Export to CSV</button>
         </div>
     </div>
 
-    <!-- Workshop Content -->
-    <div id="workshop-content">
-        <div class="container">
-            <h1>Foundation Sprint Workshop</h1>
-            
-            <!-- Module 1: Basics -->
-            <div class="module" id="module1">
-                <div class="module-header">
-                    <h2>Module 1: Basics</h2>
-                    <div class="timer" data-time="5400">90:00</div>
-                </div>
-                <form id="basics-form">
-                    <div class="form-group">
-                        <label for="company-name">Company/Project Name:</label>
-                        <input type="text" id="company-name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="problem">Problem Statement:</label>
-                        <textarea id="problem" required></textarea>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Module 2: Differentiation -->
-            <div class="module" id="module2">
-                <div class="module-header">
-                    <h2>Module 2: Differentiation</h2>
-                    <div class="timer" data-time="5400">90:00</div>
-                </div>
-                <form id="differentiation-form">
-                    <div class="form-group">
-                        <label for="competitors">Main Competitors:</label>
-                        <textarea id="competitors" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="differentiators">Key Differentiators:</label>
-                        <textarea id="differentiators" required></textarea>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Module 3: Approach -->
-            <div class="module" id="module3">
-                <div class="module-header">
-                    <h2>Module 3: Approach</h2>
-                    <div class="timer" data-time="5400">90:00</div>
-                </div>
-                <form id="approach-form">
-                    <div class="form-group">
-                        <label for="approach">Approach Description:</label>
-                        <textarea id="approach" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="risks">Potential Risks:</label>
-                        <textarea id="risks" required></textarea>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Module 4: MVP & Hypothesis -->
-            <div class="module" id="module4">
-                <div class="module-header">
-                    <h2>Module 4: MVP & Hypothesis</h2>
-                    <div class="timer" data-time="3600">60:00</div>
-                </div>
-                <form id="mvp-form">
-                    <div class="form-group">
-                        <label for="mvp">MVP Description:</label>
-                        <textarea id="mvp" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="hypothesis">Founding Hypothesis:</label>
-                        <textarea id="hypothesis" required></textarea>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Export Section -->
-            <div class="export-section">
-                <h3>Export Workshop Results</h3>
-                <button onclick="exportToPDF()">Export to PDF</button>
-                <button onclick="exportToJSON()">Export to JSON</button>
-                <button onclick="exportToMarkdown()">Export to Markdown</button>
-                <button onclick="exportToCSV()">Export to CSV</button>
-            </div>
-        </div>
-
-        <!-- Navigation -->
-        <div class="navigation">
-            <button onclick="previousModule()">Previous</button>
-            <button onclick="nextModule()">Next</button>
-        </div>
-
-        <!-- Theme Toggle -->
-        <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+    <!-- Navigation -->
+    <div class="navigation">
+        <button onclick="previousModule()">Previous</button>
+        <button onclick="nextModule()">Next</button>
     </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
 
     <script>
-        // Password Protection
-        const PASSWORD_HASH = '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'; // 'password' hashed with SHA-256
-        const SESSION_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-
-        async function checkPassword() {
-            const password = document.getElementById('password-input').value;
-            const rememberMe = document.getElementById('remember-me').checked;
-            
-            try {
-                // Hash the input password
-                const hashedPassword = await sha256(password);
-                
-                if (hashedPassword === PASSWORD_HASH) {
-                    document.getElementById('password-protection').style.display = 'none';
-                    document.getElementById('workshop-content').style.display = 'block';
-                    
-                    if (rememberMe) {
-                        const expiryTime = Date.now() + SESSION_DURATION;
-                        sessionStorage.setItem('workshopSession', expiryTime.toString());
-                    }
-                    
-                    initializeWorkshop();
-                } else {
-                    alert('Incorrect password. Please try again.');
-                }
-            } catch (error) {
-                console.error('Error checking password:', error);
-                alert('An error occurred while checking the password. Please try again.');
-            }
-        }
-
-        // Update the button to handle async function
-        document.querySelector('.password-form button').onclick = function(e) {
-            e.preventDefault();
-            checkPassword();
-        };
-
-        // Add enter key support
-        document.getElementById('password-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                checkPassword();
-            }
-        });
-
-        // Check for existing session
-        window.onload = function() {
-            const sessionExpiry = sessionStorage.getItem('workshopSession');
-            if (sessionExpiry && Date.now() < parseInt(sessionExpiry)) {
-                document.getElementById('password-protection').style.display = 'none';
-                document.getElementById('workshop-content').style.display = 'block';
-                initializeWorkshop();
-            }
-        };
-
         // Workshop Initialization
+        window.onload = function() {
+            initializeWorkshop();
+        };
+
         function initializeWorkshop() {
             loadSavedData();
             startTimers();
@@ -471,15 +382,6 @@
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
             document.body.setAttribute('data-theme', savedTheme);
-        }
-
-        // SHA-256 Hash Function
-        async function sha256(message) {
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-            return hashHex;
         }
     </script>
 </body>
