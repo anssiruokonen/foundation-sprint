@@ -276,27 +276,46 @@
         const PASSWORD_HASH = '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'; // 'password' hashed with SHA-256
         const SESSION_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
-        function checkPassword() {
+        async function checkPassword() {
             const password = document.getElementById('password-input').value;
             const rememberMe = document.getElementById('remember-me').checked;
             
-            // Hash the input password
-            const hashedPassword = sha256(password);
-            
-            if (hashedPassword === PASSWORD_HASH) {
-                document.getElementById('password-protection').style.display = 'none';
-                document.getElementById('workshop-content').style.display = 'block';
+            try {
+                // Hash the input password
+                const hashedPassword = await sha256(password);
                 
-                if (rememberMe) {
-                    const expiryTime = Date.now() + SESSION_DURATION;
-                    sessionStorage.setItem('workshopSession', expiryTime.toString());
+                if (hashedPassword === PASSWORD_HASH) {
+                    document.getElementById('password-protection').style.display = 'none';
+                    document.getElementById('workshop-content').style.display = 'block';
+                    
+                    if (rememberMe) {
+                        const expiryTime = Date.now() + SESSION_DURATION;
+                        sessionStorage.setItem('workshopSession', expiryTime.toString());
+                    }
+                    
+                    initializeWorkshop();
+                } else {
+                    alert('Incorrect password. Please try again.');
                 }
-                
-                initializeWorkshop();
-            } else {
-                alert('Incorrect password. Please try again.');
+            } catch (error) {
+                console.error('Error checking password:', error);
+                alert('An error occurred while checking the password. Please try again.');
             }
         }
+
+        // Update the button to handle async function
+        document.querySelector('.password-form button').onclick = function(e) {
+            e.preventDefault();
+            checkPassword();
+        };
+
+        // Add enter key support
+        document.getElementById('password-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                checkPassword();
+            }
+        });
 
         // Check for existing session
         window.onload = function() {
