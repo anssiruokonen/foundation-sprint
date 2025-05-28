@@ -185,6 +185,67 @@
             color: #f39c12;
         }
 
+        /* Slider Styles */
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        .slider {
+            flex: 1;
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--border-color);
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .slider:hover::-webkit-slider-thumb {
+            background: var(--secondary-color);
+        }
+
+        .slider:hover::-moz-range-thumb {
+            background: var(--secondary-color);
+        }
+
+        .slider-value {
+            min-width: 40px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
         /* Result Display */
         .result-display {
             background: #e8f5e9;
@@ -200,6 +261,33 @@
 
         .result-display strong {
             color: #2e7d32;
+        }
+
+        .hypothesis-line {
+            margin-bottom: 0.75rem;
+        }
+
+        .hypothesis-line input {
+            background: transparent;
+            border: none;
+            border-bottom: 2px dashed #4caf50;
+            padding: 0.25rem 0.5rem;
+            margin: 0 0.25rem;
+            font-weight: 600;
+            color: #2e7d32;
+            width: 200px;
+            transition: all 0.2s;
+        }
+
+        .hypothesis-line input:focus {
+            outline: none;
+            border-bottom: 2px solid #4caf50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .hypothesis-line input::placeholder {
+            color: #81c784;
+            font-weight: normal;
         }
 
         /* Navigation */
@@ -439,49 +527,45 @@
             <form id="differentiation-form">
                 <div class="section">
                     <h3>Classic Differentiators</h3>
-                    <p style="margin-bottom: 1rem;">Rate where your solution could be vs. competition (1-5 stars)</p>
+                    <p style="margin-bottom: 1rem;">Rate where your solution could be vs. competition (1-5)</p>
                     
                     <div class="form-group">
-                        <label>Speed (Slow ← → Fast)</label>
-                        <div class="rating" data-rating="speed">
-                            <span class="star" onclick="setRating('speed', 1)">★</span>
-                            <span class="star" onclick="setRating('speed', 2)">★</span>
-                            <span class="star" onclick="setRating('speed', 3)">★</span>
-                            <span class="star" onclick="setRating('speed', 4)">★</span>
-                            <span class="star" onclick="setRating('speed', 5)">★</span>
+                        <label>Speed</label>
+                        <div class="slider-container">
+                            <span>Slow</span>
+                            <input type="range" min="1" max="5" value="3" class="slider" id="speed-slider" oninput="updateSlider('speed', this.value)">
+                            <span class="slider-value">3</span>
+                            <span>Fast</span>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Ease of Use (Difficult ← → Easy)</label>
-                        <div class="rating" data-rating="ease">
-                            <span class="star" onclick="setRating('ease', 1)">★</span>
-                            <span class="star" onclick="setRating('ease', 2)">★</span>
-                            <span class="star" onclick="setRating('ease', 3)">★</span>
-                            <span class="star" onclick="setRating('ease', 4)">★</span>
-                            <span class="star" onclick="setRating('ease', 5)">★</span>
+                        <label>Ease of Use</label>
+                        <div class="slider-container">
+                            <span>Difficult</span>
+                            <input type="range" min="1" max="5" value="3" class="slider" id="ease-slider" oninput="updateSlider('ease', this.value)">
+                            <span class="slider-value">3</span>
+                            <span>Easy</span>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Cost (Expensive ← → Free/Cheap)</label>
-                        <div class="rating" data-rating="cost">
-                            <span class="star" onclick="setRating('cost', 1)">★</span>
-                            <span class="star" onclick="setRating('cost', 2)">★</span>
-                            <span class="star" onclick="setRating('cost', 3)">★</span>
-                            <span class="star" onclick="setRating('cost', 4)">★</span>
-                            <span class="star" onclick="setRating('cost', 5)">★</span>
+                        <label>Cost</label>
+                        <div class="slider-container">
+                            <span>Expensive</span>
+                            <input type="range" min="1" max="5" value="3" class="slider" id="cost-slider" oninput="updateSlider('cost', this.value)">
+                            <span class="slider-value">3</span>
+                            <span>Free/Cheap</span>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Simplicity (Complex ← → Simple)</label>
-                        <div class="rating" data-rating="simplicity">
-                            <span class="star" onclick="setRating('simplicity', 1)">★</span>
-                            <span class="star" onclick="setRating('simplicity', 2)">★</span>
-                            <span class="star" onclick="setRating('simplicity', 3)">★</span>
-                            <span class="star" onclick="setRating('simplicity', 4)">★</span>
-                            <span class="star" onclick="setRating('simplicity', 5)">★</span>
+                        <label>Simplicity</label>
+                        <div class="slider-container">
+                            <span>Complex</span>
+                            <input type="range" min="1" max="5" value="3" class="slider" id="simplicity-slider" oninput="updateSlider('simplicity', this.value)">
+                            <span class="slider-value">3</span>
+                            <span>Simple</span>
                         </div>
                     </div>
                 </div>
@@ -687,11 +771,21 @@
                 <div class="section">
                     <h3>Founding Hypothesis</h3>
                     <div class="result-display">
-                        <p>If we help <strong><span id="hypothesis_customer"></span></strong></p>
-                        <p>solve <strong><span id="hypothesis_problem"></span></strong></p>
-                        <p>with <strong><span id="hypothesis_approach"></span></strong></p>
-                        <p>they will choose it over <strong><span id="hypothesis_competitors"></span></strong></p>
-                        <p>because our solution is <strong><span id="hypothesis_differentiation"></span></strong></p>
+                        <div class="hypothesis-line">
+                            <p>If we help <input type="text" id="hypothesis_customer_input" placeholder="[target customer]" oninput="updateHypothesisDisplay()"></p>
+                        </div>
+                        <div class="hypothesis-line">
+                            <p>solve <input type="text" id="hypothesis_problem_input" placeholder="[critical problem]" oninput="updateHypothesisDisplay()"></p>
+                        </div>
+                        <div class="hypothesis-line">
+                            <p>with <input type="text" id="hypothesis_approach_input" placeholder="[our approach]" oninput="updateHypothesisDisplay()"></p>
+                        </div>
+                        <div class="hypothesis-line">
+                            <p>they will choose it over <input type="text" id="hypothesis_competitors_input" placeholder="[competitors]" oninput="updateHypothesisDisplay()"></p>
+                        </div>
+                        <div class="hypothesis-line">
+                            <p>because our solution is <input type="text" id="hypothesis_differentiation_input" placeholder="[our differentiation]" oninput="updateHypothesisDisplay()"></p>
+                        </div>
                     </div>
                 </div>
 
@@ -824,6 +918,11 @@
                 mvpWhy3: document.getElementById('mvpWhy3').value,
                 mvpTesting: document.getElementById('mvpTesting').value,
                 mvpMetrics: document.getElementById('mvpMetrics').value,
+                hypothesis_customer_input: document.getElementById('hypothesis_customer_input').value,
+                hypothesis_problem_input: document.getElementById('hypothesis_problem_input').value,
+                hypothesis_approach_input: document.getElementById('hypothesis_approach_input').value,
+                hypothesis_competitors_input: document.getElementById('hypothesis_competitors_input').value,
+                hypothesis_differentiation_input: document.getElementById('hypothesis_differentiation_input').value,
                 timestamp: new Date().toISOString()
             };
 
@@ -844,6 +943,21 @@
                     }
                 });
 
+                // Restore hypothesis inputs
+                const hypothesisInputs = [
+                    'hypothesis_customer_input',
+                    'hypothesis_problem_input',
+                    'hypothesis_approach_input',
+                    'hypothesis_competitors_input',
+                    'hypothesis_differentiation_input'
+                ];
+                hypothesisInputs.forEach(inputId => {
+                    const element = document.getElementById(inputId);
+                    if (element && savedData[inputId]) {
+                        element.value = savedData[inputId];
+                    }
+                });
+
                 // Restore ratings
                 const ratingKeys = [
                     'speed', 'ease', 'cost', 'simplicity',
@@ -856,6 +970,9 @@
                         setRating(key, savedData[key], false);
                     }
                 });
+
+                // Update hypothesis display
+                updateHypothesisDisplay();
             }
         }
 
@@ -910,64 +1027,52 @@
 
         // Rating System
         function setupRatingSystem() {
-            const ratingElements = document.querySelectorAll('.rating');
-            ratingElements.forEach(rating => {
-                const stars = rating.querySelectorAll('.star');
-                stars.forEach(star => {
-                    star.addEventListener('mouseover', function() {
-                        const rating = this.getAttribute('onclick').match(/\d+/)[0];
-                        const ratingName = this.parentElement.getAttribute('data-rating');
-                        highlightStars(ratingName, rating);
-                    });
-                    star.addEventListener('mouseout', function() {
-                        const ratingName = this.parentElement.getAttribute('data-rating');
-                        const currentRating = getRating(ratingName);
-                        highlightStars(ratingName, currentRating);
-                    });
-                });
-            });
-        }
-
-        function setRating(ratingName, value, save = true) {
-            const stars = document.querySelectorAll(`[data-rating="${ratingName}"] .star`);
-            highlightStars(ratingName, value);
-            if (save) {
-                saveToLocalStorage();
-            }
-        }
-
-        function highlightStars(ratingName, value) {
-            const stars = document.querySelectorAll(`[data-rating="${ratingName}"] .star`);
-            stars.forEach((star, index) => {
-                if (index < value) {
-                    star.classList.add('active');
-                } else {
-                    star.classList.remove('active');
+            // Initialize sliders
+            const sliders = ['speed', 'ease', 'cost', 'simplicity'];
+            sliders.forEach(slider => {
+                const savedValue = localStorage.getItem(`rating_${slider}`);
+                if (savedValue) {
+                    const sliderElement = document.getElementById(`${slider}-slider`);
+                    const valueElement = sliderElement.nextElementSibling;
+                    sliderElement.value = savedValue;
+                    valueElement.textContent = savedValue;
                 }
             });
         }
 
+        function updateSlider(ratingName, value) {
+            const sliderElement = document.getElementById(`${ratingName}-slider`);
+            const valueElement = sliderElement.nextElementSibling;
+            valueElement.textContent = value;
+            localStorage.setItem(`rating_${ratingName}`, value);
+            saveToLocalStorage();
+        }
+
         function getRating(ratingName) {
-            const stars = document.querySelectorAll(`[data-rating="${ratingName}"] .star.active`);
-            return stars.length;
+            const sliderElement = document.getElementById(`${ratingName}-slider`);
+            return sliderElement ? parseInt(sliderElement.value) : 0;
         }
 
         // Hypothesis Display
         function updateHypothesisDisplay() {
+            // Update the display values
             document.getElementById('hypothesis_customer').textContent = 
-                document.getElementById('targetCustomer').value || '[target customer]';
+                document.getElementById('hypothesis_customer_input').value || '[target customer]';
             
             document.getElementById('hypothesis_problem').textContent = 
-                document.getElementById('criticalProblem').value || '[critical problem]';
+                document.getElementById('hypothesis_problem_input').value || '[critical problem]';
             
             document.getElementById('hypothesis_approach').textContent = 
-                document.getElementById('topBet').value || '[our approach]';
+                document.getElementById('hypothesis_approach_input').value || '[our approach]';
             
             document.getElementById('hypothesis_competitors').textContent = 
-                document.getElementById('mainCompetitor').value || '[competitors]';
+                document.getElementById('hypothesis_competitors_input').value || '[competitors]';
             
             document.getElementById('hypothesis_differentiation').textContent = 
-                document.getElementById('differentiationStatement').value || '[our differentiation]';
+                document.getElementById('hypothesis_differentiation_input').value || '[our differentiation]';
+
+            // Save to local storage
+            saveToLocalStorage();
         }
 
         // Navigation Functions
@@ -1058,6 +1163,11 @@
                 mvpWhy3: document.getElementById('mvpWhy3').value,
                 mvpTesting: document.getElementById('mvpTesting').value,
                 mvpMetrics: document.getElementById('mvpMetrics').value,
+                hypothesis_customer_input: document.getElementById('hypothesis_customer_input').value,
+                hypothesis_problem_input: document.getElementById('hypothesis_problem_input').value,
+                hypothesis_approach_input: document.getElementById('hypothesis_approach_input').value,
+                hypothesis_competitors_input: document.getElementById('hypothesis_competitors_input').value,
+                hypothesis_differentiation_input: document.getElementById('hypothesis_differentiation_input').value,
                 timestamp: new Date().toISOString()
             };
 
