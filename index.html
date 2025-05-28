@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foundation Sprint Workshop</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #3b82f6;
+            --accent-color: #60a5fa;
+            --text-color: #1f2937;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #3b82f6;
+            --secondary-color: #60a5fa;
+            --accent-color: #93c5fd;
+            --text-color: #f1f5f9;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --border-color: #334155;
+            --success-color: #34d399;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .module {
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .module:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-color);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Sticky Notes */
+        .sticky-note {
+            background: #fff3cd;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            min-height: 100px;
+        }
+
+        .sticky-note input,
+        .sticky-note textarea {
+            background: transparent;
+            border: 1px dashed var(--border-color);
+        }
+
+        /* Rating System */
+        .rating {
+            display: flex;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .star {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--border-color);
+            transition: color 0.2s;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #f39c12;
+        }
+
+        /* Result Display */
+        .result-display {
+            background: #e8f5e9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            border: 2px solid #4caf50;
+        }
+
+        .result-display p {
+            margin-bottom: 0.5rem;
+        }
+
+        .result-display strong {
+            color: #2e7d32;
+        }
+
+        /* Navigation */
+        .navigation {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--card-bg);
+            padding: 1rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .navigation button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .navigation button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        /* Export Section */
+        .export-section {
+            margin-top: 3rem;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .export-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .export-section button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            margin: 0.5rem;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .export-section button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        /* Progress Indicator */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .module {
+                padding: 1.5rem;
+            }
+
+            .navigation {
+                bottom: 1rem;
+                right: 1rem;
+            }
+
+            .theme-toggle {
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progress-bar"></div>
+    <div class="container">
+        <h1>Foundation Sprint Workshop</h1>
+        
+        <!-- Module 1: Basics -->
+        <div class="module" id="module1">
+            <div class="module-header">
+                <h2>Module 1: The Basics</h2>
+            </div>
+            <form id="basics-form">
+                <div class="section">
+                    <h3>Target Customer</h3>
+                    <p style="margin-bottom: 1rem;">Who are we serving? Be specific.</p>
+                    <div class="grid">
+                        <div class="sticky-note">
+                            <input type="text" placeholder="Customer segment 1" id="customer1">
+                        </div>
+                        <div class="sticky-note">
+                            <input type="text" placeholder="Customer segment 2" id="customer2">
+                        </div>
+                        <div class="sticky-note">
+                            <input type="text" placeholder="Customer segment 3" id="customer3">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Our Target Customer (Decision):</label>
+                        <input type="text" id="targetCustomer" placeholder="e.g., Small business owners with 10-50 employees">
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Customer Problem</h3>
+                    <p style="margin-bottom: 1rem;">What critical problem do we solve?</p>
+                    <div class="grid">
+                        <div class="sticky-note">
+                            <textarea placeholder="Problem 1" id="problem1"></textarea>
+                        </div>
+                        <div class="sticky-note">
+                            <textarea placeholder="Problem 2" id="problem2"></textarea>
+                        </div>
+                        <div class="sticky-note">
+                            <textarea placeholder="Problem 3" id="problem3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>The Critical Problem (Decision):</label>
+                        <textarea id="criticalProblem" placeholder="e.g., They waste 10+ hours/week on manual inventory tracking"></textarea>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Our Advantages</h3>
+                    <div class="grid">
+                        <div class="form-group">
+                            <label>Capability (What can we do?)</label>
+                            <input type="text" id="capability" placeholder="e.g., Advanced AI/ML expertise">
+                        </div>
+                        <div class="form-group">
+                            <label>Insight (What do we know?)</label>
+                            <input type="text" id="insight" placeholder="e.g., Industry pain points from experience">
+                        </div>
+                        <div class="form-group">
+                            <label>Motivation (Why do we care?)</label>
+                            <input type="text" id="motivation" placeholder="e.g., We've lived this problem">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Competition</h3>
+                    <div class="form-group">
+                        <label>800-pound Gorilla (Main Competitor):</label>
+                        <input type="text" id="mainCompetitor" placeholder="e.g., Microsoft Excel">
+                    </div>
+                    <div class="form-group">
+                        <label>Other Alternatives (comma-separated):</label>
+                        <input type="text" id="alternatives" placeholder="e.g., Pen & paper, Competitor X, Do nothing">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Module 2: Differentiation -->
+        <div class="module" id="module2">
+            <div class="module-header">
+                <h2>Module 2: Differentiation</h2>
+            </div>
+            <form id="differentiation-form">
+                <div class="section">
+                    <h3>Classic Differentiators</h3>
+                    <p style="margin-bottom: 1rem;">Rate where your solution could be vs. competition (1-5 stars)</p>
+                    
+                    <div class="form-group">
+                        <label>Speed (Slow ← → Fast)</label>
+                        <div class="rating" data-rating="speed">
+                            <span class="star" onclick="setRating('speed', 1)">★</span>
+                            <span class="star" onclick="setRating('speed', 2)">★</span>
+                            <span class="star" onclick="setRating('speed', 3)">★</span>
+                            <span class="star" onclick="setRating('speed', 4)">★</span>
+                            <span class="star" onclick="setRating('speed', 5)">★</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ease of Use (Difficult ← → Easy)</label>
+                        <div class="rating" data-rating="ease">
+                            <span class="star" onclick="setRating('ease', 1)">★</span>
+                            <span class="star" onclick="setRating('ease', 2)">★</span>
+                            <span class="star" onclick="setRating('ease', 3)">★</span>
+                            <span class="star" onclick="setRating('ease', 4)">★</span>
+                            <span class="star" onclick="setRating('ease', 5)">★</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cost (Expensive ← → Free/Cheap)</label>
+                        <div class="rating" data-rating="cost">
+                            <span class="star" onclick="setRating('cost', 1)">★</span>
+                            <span class="star" onclick="setRating('cost', 2)">★</span>
+                            <span class="star" onclick="setRating('cost', 3)">★</span>
+                            <span class="star" onclick="setRating('cost', 4)">★</span>
+                            <span class="star" onclick="setRating('cost', 5)">★</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Simplicity (Complex ← → Simple)</label>
+                        <div class="rating" data-rating="simplicity">
+                            <span class="star" onclick="setRating('simplicity', 1)">★</span>
+                            <span class="star" onclick="setRating('simplicity', 2)">★</span>
+                            <span class="star" onclick="setRating('simplicity', 3)">★</span>
+                            <span class="star" onclick="setRating('simplicity', 4)">★</span>
+                            <span class="star" onclick="setRating('simplicity', 5)">★</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Custom Differentiators</h3>
+                    <p style="margin-bottom: 1rem;">What unique dimensions matter to our customers?</p>
+                    <div class="grid">
+                        <div class="form-group">
+                            <label>Differentiator 1</label>
+                            <input type="text" id="customDiff1" placeholder="e.g., Boring → Delightful">
+                        </div>
+                        <div class="form-group">
+                            <label>Differentiator 2</label>
+                            <input type="text" id="customDiff2" placeholder="e.g., Generic → Personalized">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Our Differentiation Statement</h3>
+                    <div class="form-group">
+                        <label>We're the only solution that...</label>
+                        <textarea id="differentiationStatement" placeholder="e.g., combines AI-powered automation with human-friendly design to make inventory management actually enjoyable"></textarea>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Practical Principles</h3>
+                    <div class="form-group">
+                        <label>Principle 1:</label>
+                        <input type="text" id="principle1" placeholder="e.g., Always prioritize user delight over feature count">
+                    </div>
+                    <div class="form-group">
+                        <label>Principle 2:</label>
+                        <input type="text" id="principle2" placeholder="e.g., Never require more than 3 clicks to complete a task">
+                    </div>
+                    <div class="form-group">
+                        <label>Principle 3:</label>
+                        <input type="text" id="principle3" placeholder="e.g., Always show progress and celebrate small wins">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Module 3: Approach -->
+        <div class="module" id="module3">
+            <div class="module-header">
+                <h2>Module 3: Approach</h2>
+            </div>
+            <form id="approach-form">
+                <div class="section">
+                    <h3>Approach Options</h3>
+                    <p style="margin-bottom: 1rem;">What are different ways we could solve this problem?</p>
+                    
+                    <div class="sticky-note" style="margin-bottom: 1rem;">
+                        <h4>Approach A</h4>
+                        <input type="text" id="approachA_name" placeholder="Name (e.g., AI Assistant)">
+                        <textarea id="approachA_desc" placeholder="Description: What is it and why might it work?"></textarea>
+                    </div>
+
+                    <div class="sticky-note" style="margin-bottom: 1rem;">
+                        <h4>Approach B</h4>
+                        <input type="text" id="approachB_name" placeholder="Name (e.g., Mobile-First App)">
+                        <textarea id="approachB_desc" placeholder="Description: What is it and why might it work?"></textarea>
+                    </div>
+
+                    <div class="sticky-note" style="margin-bottom: 1rem;">
+                        <h4>Approach C</h4>
+                        <input type="text" id="approachC_name" placeholder="Name (e.g., Integration Platform)">
+                        <textarea id="approachC_desc" placeholder="Description: What is it and why might it work?"></textarea>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Quick Evaluation</h3>
+                    <p style="margin-bottom: 1rem;">Rate each approach (1-5 stars)</p>
+                    
+                    <table style="width: 100%; text-align: center;">
+                        <tr>
+                            <th>Approach</th>
+                            <th>Customer Fit</th>
+                            <th>Feasibility</th>
+                            <th>Differentiation</th>
+                            <th>Growth Potential</th>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td><div class="rating" data-rating="a_customer">
+                                <span class="star" onclick="setRating('a_customer', 1)">★</span>
+                                <span class="star" onclick="setRating('a_customer', 2)">★</span>
+                                <span class="star" onclick="setRating('a_customer', 3)">★</span>
+                                <span class="star" onclick="setRating('a_customer', 4)">★</span>
+                                <span class="star" onclick="setRating('a_customer', 5)">★</span>
+                            </div></td>
+                            <td><div class="rating" data-rating="a_feasible">
+                                <span class="star" onclick="setRating('a_feasible', 1)">★</span>
+                                <span class="star" onclick="setRating('a_feasible', 2)">★</span>
+                                <span class="star" onclick="setRating('a_feasible', 3)">★</span>
+                                <span class="star" onclick="setRating('a_feasible', 4)">★</span>
+                                <span class="star" onclick="setRating('a_feasible', 5)">★</span>
+                            </div></td>
+                            <td><div class="rating" data-rating="a_different">
+                                <span class="star" onclick="setRating('a_different', 1)">★</span>
+                                <span class="star" onclick="setRating('a_different', 2)">★</span>
+                                <span class="star" onclick="setRating('a_different', 3)">★</span>
+                                <span class="star" onclick="setRating('a_different', 4)">★</span>
+                                <span class="star" onclick="setRating('a_different', 5)">★</span>
+                            </div></td>
+                            <td><div class="rating" data-rating="a_growth">
+                                <span class="star" onclick="setRating('a_growth', 1)">★</span>
+                                <span class="star" onclick="setRating('a_growth', 2)">★</span>
+                                <span class="star" onclick="setRating('a_growth', 3)">★</span>
+                                <span class="star" onclick="setRating('a_growth', 4)">★</span>
+                                <span class="star" onclick="setRating('a_growth', 5)">★</span>
+                            </div></td>
+                        </tr>
+                        <tr>
+                            <td>B</td>
+                            <td><div class="rating" data-rating="b_customer">
+                                <span class="star" onclick="setRating('b_customer', 1)">★</span>
+                                <span class="star" onclick="setRating('b_customer', 2)">★</span>
+                                <span class="star" onclick="setRating('b_customer', 3)">★</span>
+                                <span class="star" onclick="setRating('b_customer', 4)">★</span>
+                                <span class="star" onclick="setRating('b_customer', 5)">★</span>
+                            </div></td>
+                            <td><div class="rating" data-rating="b_feasible">
+                                <span class="star" onclick="setRating('b_feasible', 1)">★</span>
+                                <span class="star" onclick="setRating('b_feasible', 2)">★</span>
+                                <span class="star" onclick="setRating('b_feasible', 3)">★</span>
+                                <span class="star" onclick="setRating('b_feasible', 4)">★</span>
+                                <span class="star" onclick="setRating('b_feasible', 5)">★</span>
+                            </div></td>
+                            <td><div class="rating" data-rating="b_different">
+                                <span class="star" onclick="setRating('b_different', 1)">★</span>
+                                <span class="star" onclick="setRating('b_different', 2)">★</span>
+                                <span class="star" onclick="setRating('b_different', 3)">★</span>
+                                <span class="star" onclick="setRating('b_different', 4)">★</span>
+                                <span class="star" onclick="setRating('b_different', 5)">★</span>
+                            </div></td>
+                            <td><div class="rating" data-rating="b_growth">
+                                <span class="star" onclick="setRating('b_growth', 1)">★</span>
+                                <span class="star" onclick="setRating('b_growth', 2)">★</span>
+                                <span class="star" onclick="setRating('b_growth', 3)">★</span>
+                                <span class="star" onclick="setRating('b_growth', 4)">★</span>
+                                <span class="star" onclick="setRating('b_growth', 5)">★</span>
+                            </div></td>
+                        </tr>
+                        <tr>
+                            <td>C</td>
+                            <td><div class="rating" data-rating="c_customer">
+                                <span class="star" onclick="setRating('c_customer', 1)">★</span>
+                                <span class="star" onclick="setRating('c_customer', 2)">★</span>
+                                <span class="star" onclick="setRating('c_customer', 3)">★</span>
+                                <span class="star" onclick="setRating('c_customer', 4)">★</span>
+                                <span class="star" onclick="setRating('c_customer', 5)">★</span>
+                            </div></td>
+                            <td><div class="rating" data-rating="c_feasible">
+                                <span class="star" onclick="setRating('c_feasible', 1)">★</span>
+                                <span class="star" onclick="setRating('c_feasible', 2)">★</span>
+                                <span class="star" onclick="setRating('c_feasible', 3)">★</span>
+                                <span class="star" onclick="setRating('c_feasible', 4)">★</span>
+                                <span class="star" onclick="setRating('c_feasible', 5)">★</span>
+                            </div></td>
+                            <td><div class="rating" data-rating="c_different">
+                                <span class="star" onclick="setRating('c_different', 1)">★</span>
+                                <span class="star" onclick="setRating('c_different', 2)">★</span>
+                                <span class="star" onclick="setRating('c_different', 3)">★</span>
+                                <span class="star" onclick="setRating('c_different', 4)">★</span>
+                                <span class="star" onclick="setRating('c_different', 5)">★</span>
+                            </div></td>
+                            <td><div class="rating" data-rating="c_growth">
+                                <span class="star" onclick="setRating('c_growth', 1)">★</span>
+                                <span class="star" onclick="setRating('c_growth', 2)">★</span>
+                                <span class="star" onclick="setRating('c_growth', 3)">★</span>
+                                <span class="star" onclick="setRating('c_growth', 4)">★</span>
+                                <span class="star" onclick="setRating('c_growth', 5)">★</span>
+                            </div></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="section">
+                    <h3>Decision</h3>
+                    <div class="form-group">
+                        <label>Top Bet (Primary Approach):</label>
+                        <input type="text" id="topBet" placeholder="e.g., Approach A - AI Assistant">
+                    </div>
+                    <div class="form-group">
+                        <label>Backup Plan:</label>
+                        <input type="text" id="backupPlan" placeholder="e.g., Approach B - Mobile App">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Module 4: MVP & Hypothesis -->
+        <div class="module" id="module4">
+            <div class="module-header">
+                <h2>Module 4: MVP & Founding Hypothesis</h2>
+            </div>
+            <form id="mvp-form">
+                <div class="section">
+                    <h3>Founding Hypothesis</h3>
+                    <div class="result-display">
+                        <p>If we help <strong><span id="hypothesis_customer"></span></strong></p>
+                        <p>solve <strong><span id="hypothesis_problem"></span></strong></p>
+                        <p>with <strong><span id="hypothesis_approach"></span></strong></p>
+                        <p>they will choose it over <strong><span id="hypothesis_competitors"></span></strong></p>
+                        <p>because our solution is <strong><span id="hypothesis_differentiation"></span></strong></p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>MVP Scope - Must Haves</h3>
+                    <p style="margin-bottom: 1rem;">What's the minimum to validate our hypothesis?</p>
+                    <div class="form-group">
+                        <label>Core Feature 1:</label>
+                        <input type="text" id="mvpFeature1" placeholder="e.g., Basic inventory tracking">
+                        <input type="text" id="mvpWhy1" placeholder="Why essential? e.g., Proves automation value" style="margin-top: 0.5rem;">
+                    </div>
+                    <div class="form-group">
+                        <label>Core Feature 2:</label>
+                        <input type="text" id="mvpFeature2" placeholder="e.g., AI predictions">
+                        <input type="text" id="mvpWhy2" placeholder="Why essential?" style="margin-top: 0.5rem;">
+                    </div>
+                    <div class="form-group">
+                        <label>Core Feature 3:</label>
+                        <input type="text" id="mvpFeature3" placeholder="e.g., Mobile notifications">
+                        <input type="text" id="mvpWhy3" placeholder="Why essential?" style="margin-top: 0.5rem;">
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>MVP Validation Plan</h3>
+                    <div class="form-group">
+                        <label>What we're testing:</label>
+                        <textarea id="mvpTesting" placeholder="e.g., Will users trust AI predictions enough to act on them?"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Success metrics:</label>
+                        <textarea id="mvpMetrics" placeholder="e.g., 70% of users complete setup within 5 minutes"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Export Section -->
+        <div class="export-section">
+            <h3>Export Workshop Results</h3>
+            <button onclick="exportToPDF()">Export to PDF</button>
+            <button onclick="exportToJSON()">Export to JSON</button>
+            <button onclick="exportToMarkdown()">Export to Markdown</button>
+            <button onclick="exportToCSV()">Export to CSV</button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+        <button onclick="previousModule()">Previous</button>
+        <button onclick="nextModule()">Next</button>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+
+    <script>
+        // Workshop Initialization
+        window.onload = function() {
+            initializeWorkshop();
+            updateProgressBar();
+            updateHypothesisDisplay();
+        };
+
+        function initializeWorkshop() {
+            loadSavedData();
+            setupAutoSave();
+            setupFormValidation();
+            setupRatingSystem();
+        }
+
+        // Local Storage Functions
+        function saveToLocalStorage() {
+            const workshopData = {
+                // Module 1: The Basics
+                customer1: document.getElementById('customer1').value,
+                customer2: document.getElementById('customer2').value,
+                customer3: document.getElementById('customer3').value,
+                targetCustomer: document.getElementById('targetCustomer').value,
+                problem1: document.getElementById('problem1').value,
+                problem2: document.getElementById('problem2').value,
+                problem3: document.getElementById('problem3').value,
+                criticalProblem: document.getElementById('criticalProblem').value,
+                capability: document.getElementById('capability').value,
+                insight: document.getElementById('insight').value,
+                motivation: document.getElementById('motivation').value,
+                mainCompetitor: document.getElementById('mainCompetitor').value,
+                alternatives: document.getElementById('alternatives').value,
+
+                // Module 2: Differentiation
+                speed: getRating('speed'),
+                ease: getRating('ease'),
+                cost: getRating('cost'),
+                simplicity: getRating('simplicity'),
+                customDiff1: document.getElementById('customDiff1').value,
+                customDiff2: document.getElementById('customDiff2').value,
+                differentiationStatement: document.getElementById('differentiationStatement').value,
+                principle1: document.getElementById('principle1').value,
+                principle2: document.getElementById('principle2').value,
+                principle3: document.getElementById('principle3').value,
+
+                // Module 3: Approach
+                approachA_name: document.getElementById('approachA_name').value,
+                approachA_desc: document.getElementById('approachA_desc').value,
+                approachB_name: document.getElementById('approachB_name').value,
+                approachB_desc: document.getElementById('approachB_desc').value,
+                approachC_name: document.getElementById('approachC_name').value,
+                approachC_desc: document.getElementById('approachC_desc').value,
+                a_customer: getRating('a_customer'),
+                a_feasible: getRating('a_feasible'),
+                a_different: getRating('a_different'),
+                a_growth: getRating('a_growth'),
+                b_customer: getRating('b_customer'),
+                b_feasible: getRating('b_feasible'),
+                b_different: getRating('b_different'),
+                b_growth: getRating('b_growth'),
+                c_customer: getRating('c_customer'),
+                c_feasible: getRating('c_feasible'),
+                c_different: getRating('c_different'),
+                c_growth: getRating('c_growth'),
+                topBet: document.getElementById('topBet').value,
+                backupPlan: document.getElementById('backupPlan').value,
+
+                // Module 4: MVP & Hypothesis
+                mvpFeature1: document.getElementById('mvpFeature1').value,
+                mvpWhy1: document.getElementById('mvpWhy1').value,
+                mvpFeature2: document.getElementById('mvpFeature2').value,
+                mvpWhy2: document.getElementById('mvpWhy2').value,
+                mvpFeature3: document.getElementById('mvpFeature3').value,
+                mvpWhy3: document.getElementById('mvpWhy3').value,
+                mvpTesting: document.getElementById('mvpTesting').value,
+                mvpMetrics: document.getElementById('mvpMetrics').value,
+                timestamp: new Date().toISOString()
+            };
+
+            localStorage.setItem('foundationSprint_' + workshopData.timestamp, JSON.stringify(workshopData));
+        }
+
+        function loadSavedData() {
+            const keys = Object.keys(localStorage).filter(key => key.startsWith('foundationSprint_'));
+            if (keys.length > 0) {
+                const latestKey = keys.sort().pop();
+                const savedData = JSON.parse(localStorage.getItem(latestKey));
+                
+                // Populate form fields
+                Object.keys(savedData).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        element.value = savedData[key];
+                    }
+                });
+
+                // Restore ratings
+                const ratingKeys = [
+                    'speed', 'ease', 'cost', 'simplicity',
+                    'a_customer', 'a_feasible', 'a_different', 'a_growth',
+                    'b_customer', 'b_feasible', 'b_different', 'b_growth',
+                    'c_customer', 'c_feasible', 'c_different', 'c_growth'
+                ];
+                ratingKeys.forEach(key => {
+                    if (savedData[key]) {
+                        setRating(key, savedData[key], false);
+                    }
+                });
+            }
+        }
+
+        // Auto-save functionality
+        function setupAutoSave() {
+            setInterval(saveToLocalStorage, 30000); // Save every 30 seconds
+        }
+
+        // Form Validation
+        function setupFormValidation() {
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('input', () => {
+                    updateProgressBar();
+                    updateHypothesisDisplay();
+                });
+            });
+        }
+
+        // Progress Bar
+        function updateProgressBar() {
+            const totalFields = 30; // Updated total number of required fields
+            let filledFields = 0;
+
+            const fields = [
+                'customer1', 'customer2', 'customer3', 'targetCustomer',
+                'problem1', 'problem2', 'problem3', 'criticalProblem',
+                'capability', 'insight', 'motivation',
+                'mainCompetitor', 'alternatives',
+                'customDiff1', 'customDiff2', 'differentiationStatement',
+                'principle1', 'principle2', 'principle3',
+                'approachA_name', 'approachA_desc',
+                'approachB_name', 'approachB_desc',
+                'approachC_name', 'approachC_desc',
+                'topBet', 'backupPlan',
+                'mvpFeature1', 'mvpWhy1',
+                'mvpFeature2', 'mvpWhy2',
+                'mvpFeature3', 'mvpWhy3',
+                'mvpTesting', 'mvpMetrics'
+            ];
+
+            fields.forEach(field => {
+                const element = document.getElementById(field);
+                if (element && element.value.trim() !== '') {
+                    filledFields++;
+                }
+            });
+
+            const progress = (filledFields / totalFields) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+        }
+
+        // Rating System
+        function setupRatingSystem() {
+            const ratingElements = document.querySelectorAll('.rating');
+            ratingElements.forEach(rating => {
+                const stars = rating.querySelectorAll('.star');
+                stars.forEach(star => {
+                    star.addEventListener('mouseover', function() {
+                        const rating = this.getAttribute('onclick').match(/\d+/)[0];
+                        const ratingName = this.parentElement.getAttribute('data-rating');
+                        highlightStars(ratingName, rating);
+                    });
+                    star.addEventListener('mouseout', function() {
+                        const ratingName = this.parentElement.getAttribute('data-rating');
+                        const currentRating = getRating(ratingName);
+                        highlightStars(ratingName, currentRating);
+                    });
+                });
+            });
+        }
+
+        function setRating(ratingName, value, save = true) {
+            const stars = document.querySelectorAll(`[data-rating="${ratingName}"] .star`);
+            highlightStars(ratingName, value);
+            if (save) {
+                saveToLocalStorage();
+            }
+        }
+
+        function highlightStars(ratingName, value) {
+            const stars = document.querySelectorAll(`[data-rating="${ratingName}"] .star`);
+            stars.forEach((star, index) => {
+                if (index < value) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        function getRating(ratingName) {
+            const stars = document.querySelectorAll(`[data-rating="${ratingName}"] .star.active`);
+            return stars.length;
+        }
+
+        // Hypothesis Display
+        function updateHypothesisDisplay() {
+            document.getElementById('hypothesis_customer').textContent = 
+                document.getElementById('targetCustomer').value || '[target customer]';
+            
+            document.getElementById('hypothesis_problem').textContent = 
+                document.getElementById('criticalProblem').value || '[critical problem]';
+            
+            document.getElementById('hypothesis_approach').textContent = 
+                document.getElementById('topBet').value || '[our approach]';
+            
+            document.getElementById('hypothesis_competitors').textContent = 
+                document.getElementById('mainCompetitor').value || '[competitors]';
+            
+            document.getElementById('hypothesis_differentiation').textContent = 
+                document.getElementById('differentiationStatement').value || '[our differentiation]';
+        }
+
+        // Navigation Functions
+        let currentModule = 1;
+        const totalModules = 4;
+
+        function nextModule() {
+            if (currentModule < totalModules) {
+                document.getElementById(`module${currentModule}`).style.display = 'none';
+                currentModule++;
+                document.getElementById(`module${currentModule}`).style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function previousModule() {
+            if (currentModule > 1) {
+                document.getElementById(`module${currentModule}`).style.display = 'none';
+                currentModule--;
+                document.getElementById(`module${currentModule}`).style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Export Functions
+        function exportToPDF() {
+            // Implementation for PDF export
+            alert('PDF export functionality to be implemented');
+        }
+
+        function exportToJSON() {
+            const workshopData = {
+                // Module 1: The Basics
+                customer1: document.getElementById('customer1').value,
+                customer2: document.getElementById('customer2').value,
+                customer3: document.getElementById('customer3').value,
+                targetCustomer: document.getElementById('targetCustomer').value,
+                problem1: document.getElementById('problem1').value,
+                problem2: document.getElementById('problem2').value,
+                problem3: document.getElementById('problem3').value,
+                criticalProblem: document.getElementById('criticalProblem').value,
+                capability: document.getElementById('capability').value,
+                insight: document.getElementById('insight').value,
+                motivation: document.getElementById('motivation').value,
+                mainCompetitor: document.getElementById('mainCompetitor').value,
+                alternatives: document.getElementById('alternatives').value,
+
+                // Module 2: Differentiation
+                speed: getRating('speed'),
+                ease: getRating('ease'),
+                cost: getRating('cost'),
+                simplicity: getRating('simplicity'),
+                customDiff1: document.getElementById('customDiff1').value,
+                customDiff2: document.getElementById('customDiff2').value,
+                differentiationStatement: document.getElementById('differentiationStatement').value,
+                principle1: document.getElementById('principle1').value,
+                principle2: document.getElementById('principle2').value,
+                principle3: document.getElementById('principle3').value,
+
+                // Module 3: Approach
+                approachA_name: document.getElementById('approachA_name').value,
+                approachA_desc: document.getElementById('approachA_desc').value,
+                approachB_name: document.getElementById('approachB_name').value,
+                approachB_desc: document.getElementById('approachB_desc').value,
+                approachC_name: document.getElementById('approachC_name').value,
+                approachC_desc: document.getElementById('approachC_desc').value,
+                a_customer: getRating('a_customer'),
+                a_feasible: getRating('a_feasible'),
+                a_different: getRating('a_different'),
+                a_growth: getRating('a_growth'),
+                b_customer: getRating('b_customer'),
+                b_feasible: getRating('b_feasible'),
+                b_different: getRating('b_different'),
+                b_growth: getRating('b_growth'),
+                c_customer: getRating('c_customer'),
+                c_feasible: getRating('c_feasible'),
+                c_different: getRating('c_different'),
+                c_growth: getRating('c_growth'),
+                topBet: document.getElementById('topBet').value,
+                backupPlan: document.getElementById('backupPlan').value,
+
+                // Module 4: MVP & Hypothesis
+                mvpFeature1: document.getElementById('mvpFeature1').value,
+                mvpWhy1: document.getElementById('mvpWhy1').value,
+                mvpFeature2: document.getElementById('mvpFeature2').value,
+                mvpWhy2: document.getElementById('mvpWhy2').value,
+                mvpFeature3: document.getElementById('mvpFeature3').value,
+                mvpWhy3: document.getElementById('mvpWhy3').value,
+                mvpTesting: document.getElementById('mvpTesting').value,
+                mvpMetrics: document.getElementById('mvpMetrics').value,
+                timestamp: new Date().toISOString()
+            };
+
+            const blob = new Blob([JSON.stringify(workshopData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `foundation-sprint-${workshopData.timestamp}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function exportToMarkdown() {
+            // Implementation for Markdown export
+            alert('Markdown export functionality to be implemented');
+        }
+
+        function exportToCSV() {
+            // Implementation for CSV export
+            alert('CSV export functionality to be implemented');
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            body.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
+            localStorage.setItem('theme', currentTheme === 'dark' ? 'light' : 'dark');
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.body.setAttribute('data-theme', savedTheme);
+        }
+    </script>
+</body>
+</html> 
