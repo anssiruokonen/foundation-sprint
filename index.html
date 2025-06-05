@@ -654,6 +654,11 @@
                     <h3>Quick Evaluation</h3>
                     <p style="margin-bottom: 1rem;">Rate each approach (1-5 stars)</p>
                     
+                    <div style="margin-bottom: 1rem; display: flex; gap: 1rem; align-items: center;">
+                        <button type="button" onclick="clearAllRatings()" style="background-color: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.875rem;">Clear All Ratings</button>
+                        <span style="color: var(--text-color); font-size: 0.875rem;">Tip: Click the same star again to clear individual ratings</span>
+                    </div>
+                    
                     <table style="width: 100%; text-align: center;">
                         <tr>
                             <th>Approach</th>
@@ -662,6 +667,7 @@
                             <th>Differentiation</th>
                             <th>Growth Potential</th>
                             <th>Total</th>
+                            <th>Actions</th>
                         </tr>
                         <tr>
                             <td>A</td>
@@ -694,6 +700,7 @@
                                 <span class="star" onclick="setRating('a_growth', 5)">★</span>
                             </div></td>
                             <td class="total-stars">0/20</td>
+                            <td><button type="button" onclick="clearApproachRatings('a')" style="background-color: #f97316; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 0.25rem; cursor: pointer; font-size: 0.75rem;">Clear A</button></td>
                         </tr>
                         <tr>
                             <td>B</td>
@@ -726,6 +733,7 @@
                                 <span class="star" onclick="setRating('b_growth', 5)">★</span>
                             </div></td>
                             <td class="total-stars">0/20</td>
+                            <td><button type="button" onclick="clearApproachRatings('b')" style="background-color: #f97316; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 0.25rem; cursor: pointer; font-size: 0.75rem;">Clear B</button></td>
                         </tr>
                         <tr>
                             <td>C</td>
@@ -758,6 +766,7 @@
                                 <span class="star" onclick="setRating('c_growth', 5)">★</span>
                             </div></td>
                             <td class="total-stars">0/20</td>
+                            <td><button type="button" onclick="clearApproachRatings('c')" style="background-color: #f97316; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 0.25rem; cursor: pointer; font-size: 0.75rem;">Clear C</button></td>
                         </tr>
                     </table>
                 </div>
@@ -1092,6 +1101,14 @@
 
         // Star Rating System for Module 3
         function setRating(ratingName, value, shouldSave = true) {
+            // Get current rating to check if we're clicking the same star
+            const currentRating = getRating(ratingName);
+            
+            // If clicking the same star that's already selected, clear the rating
+            if (currentRating === value) {
+                value = 0;
+            }
+            
             // Store the rating value
             localStorage.setItem(`rating_${ratingName}`, value);
             
@@ -1115,6 +1132,31 @@
             if (shouldSave) {
                 saveToLocalStorage();
             }
+        }
+
+        // Clear all star ratings
+        function clearAllRatings() {
+            const starRatings = [
+                'a_customer', 'a_feasible', 'a_different', 'a_growth',
+                'b_customer', 'b_feasible', 'b_different', 'b_growth',
+                'c_customer', 'c_feasible', 'c_different', 'c_growth'
+            ];
+            
+            starRatings.forEach(rating => {
+                setRating(rating, 0, false);
+            });
+            
+            // Save after clearing all
+            saveToLocalStorage();
+        }
+
+        // Clear ratings for a specific approach
+        function clearApproachRatings(approach) {
+            const criteria = ['customer', 'feasible', 'different', 'growth'];
+            criteria.forEach(criterion => {
+                setRating(`${approach}_${criterion}`, 0, false);
+            });
+            saveToLocalStorage();
         }
 
         // Calculate and display total stars for each approach
