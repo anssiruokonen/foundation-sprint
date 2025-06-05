@@ -434,6 +434,16 @@
                 overflow-x: auto;
             }
         }
+
+        /* Total stars styling */
+        .total-stars {
+            font-weight: bold;
+            color: white;
+            border-radius: 4px;
+            padding: 4px 8px;
+            text-align: center;
+            min-width: 60px;
+        }
     </style>
 </head>
 <body>
@@ -651,6 +661,7 @@
                             <th>Feasibility</th>
                             <th>Differentiation</th>
                             <th>Growth Potential</th>
+                            <th>Total</th>
                         </tr>
                         <tr>
                             <td>A</td>
@@ -682,6 +693,7 @@
                                 <span class="star" onclick="setRating('a_growth', 4)">★</span>
                                 <span class="star" onclick="setRating('a_growth', 5)">★</span>
                             </div></td>
+                            <td class="total-stars">0/20</td>
                         </tr>
                         <tr>
                             <td>B</td>
@@ -713,6 +725,7 @@
                                 <span class="star" onclick="setRating('b_growth', 4)">★</span>
                                 <span class="star" onclick="setRating('b_growth', 5)">★</span>
                             </div></td>
+                            <td class="total-stars">0/20</td>
                         </tr>
                         <tr>
                             <td>C</td>
@@ -744,6 +757,7 @@
                                 <span class="star" onclick="setRating('c_growth', 4)">★</span>
                                 <span class="star" onclick="setRating('c_growth', 5)">★</span>
                             </div></td>
+                            <td class="total-stars">0/20</td>
                         </tr>
                     </table>
                 </div>
@@ -1038,6 +1052,23 @@
                     valueElement.textContent = savedValue;
                 }
             });
+            
+            // Initialize star ratings for approach evaluation
+            const starRatings = [
+                'a_customer', 'a_feasible', 'a_different', 'a_growth',
+                'b_customer', 'b_feasible', 'b_different', 'b_growth',
+                'c_customer', 'c_feasible', 'c_different', 'c_growth'
+            ];
+            
+            starRatings.forEach(rating => {
+                const savedValue = localStorage.getItem(`rating_${rating}`);
+                if (savedValue) {
+                    setRating(rating, parseInt(savedValue), false);
+                }
+            });
+            
+            // Update approach totals
+            updateApproachTotals();
         }
 
         function updateSlider(ratingName, value) {
@@ -1050,7 +1081,76 @@
 
         function getRating(ratingName) {
             const sliderElement = document.getElementById(`${ratingName}-slider`);
-            return sliderElement ? parseInt(sliderElement.value) : 0;
+            if (sliderElement) {
+                return parseInt(sliderElement.value);
+            }
+            
+            // For star ratings, get from localStorage
+            const starRating = localStorage.getItem(`rating_${ratingName}`);
+            return starRating ? parseInt(starRating) : 0;
+        }
+
+        // Star Rating System for Module 3
+        function setRating(ratingName, value, shouldSave = true) {
+            // Store the rating value
+            localStorage.setItem(`rating_${ratingName}`, value);
+            
+            // Update visual display of stars
+            const ratingContainer = document.querySelector(`[data-rating="${ratingName}"]`);
+            if (ratingContainer) {
+                const stars = ratingContainer.querySelectorAll('.star');
+                stars.forEach((star, index) => {
+                    if (index < value) {
+                        star.classList.add('active');
+                    } else {
+                        star.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Update approach totals
+            updateApproachTotals();
+            
+            // Save to localStorage if requested
+            if (shouldSave) {
+                saveToLocalStorage();
+            }
+        }
+
+        // Calculate and display total stars for each approach
+        function updateApproachTotals() {
+            const approaches = ['a', 'b', 'c'];
+            const criteria = ['customer', 'feasible', 'different', 'growth'];
+            
+            // Get all total cells
+            const totalCells = document.querySelectorAll('.total-stars');
+            
+            approaches.forEach((approach, index) => {
+                let total = 0;
+                criteria.forEach(criterion => {
+                    const rating = getRating(`${approach}_${criterion}`);
+                    total += rating;
+                });
+                
+                // Update the corresponding total cell
+                if (totalCells[index]) {
+                    totalCells[index].textContent = `${total}/20`;
+                    // Color code based on total score
+                    if (total >= 16) {
+                        totalCells[index].style.backgroundColor = '#22c55e'; // green
+                    } else if (total >= 12) {
+                        totalCells[index].style.backgroundColor = '#f59e0b'; // orange
+                    } else if (total >= 8) {
+                        totalCells[index].style.backgroundColor = '#ef4444'; // red
+                    } else {
+                        totalCells[index].style.backgroundColor = '#6b7280'; // gray
+                    }
+                    totalCells[index].style.color = 'white';
+                    totalCells[index].style.fontWeight = 'bold';
+                    totalCells[index].style.borderRadius = '4px';
+                    totalCells[index].style.padding = '4px 8px';
+                }
+            });
         }
 
         // Hypothesis Display
